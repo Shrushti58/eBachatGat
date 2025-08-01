@@ -193,7 +193,13 @@ router.post("/api/login", async (req, res) => {
     }
 
     const token = generateToken(user);
-    res.cookie("token", token);
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+      })
 
     let redirectUrl;
     switch (user.role) {
