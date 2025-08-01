@@ -74,10 +74,18 @@ router.post("/login", async (req, res) => {
     }
 
     const token = generateToken(admin);
-
-    res.cookie("token", token)
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+      })
       .status(200)
-      .json({ message: "Login successful", admin: { id: admin._id, email: admin.email } });
+      .json({
+        message: "Login successful",
+        admin: { id: admin._id, email: admin.email },
+      });
 
   } catch (error) {
     console.error("Login error:", error);
