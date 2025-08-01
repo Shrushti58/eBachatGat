@@ -67,3 +67,17 @@ ebachat-gat/
     ├── routes/             # API endpoints
     ├── middleware/         # Auth/validation
     └── server.js           # Entry point
+
+  ---
+
+## 🔧 Environment Setup
+Create a `.env` file inside the `backend/` folder with the following:
+
+```env
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/ebachat
+JWT_SECRET=your_jwt_secret_here
+RAZORPAY_KEY_ID=rzp_test_xxxxxxxx
+RAZORPAY_KEY_SECRET=xxxxxxxxxxxx
+CLOUDINARY_CLOUD_NAME=your_cloud
+CLOUDINARY_API_KEY=123456789
+CLOUDINARY_API_SECRET=xxxxxxxxxx
