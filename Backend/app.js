@@ -19,16 +19,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 
-const path = require('path');
-
-// Serve static files from frontend/dist
-app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
-
-// Catch-all route to serve index.html for frontend routing (React/Vite)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
-});
-
 
 
 const allowedOrigins = [
