@@ -7,7 +7,7 @@ const app = express();
 const expressSession = require('express-session');
 const flash = require('connect-flash');
 const cookieParser = require('cookie-parser');
-const path = require('path');
+
 const cors = require('cors');
 
 const PORT = process.env.PORT || 3000;
@@ -17,7 +17,18 @@ app.use('/uploads', express.static('uploads'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+
+const path = require('path');
+
+// Serve static files from frontend/dist
+app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
+
+// Catch-all route to serve index.html for frontend routing (React/Vite)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+});
+
 
 
 const allowedOrigins = [
