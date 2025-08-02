@@ -240,4 +240,34 @@ router.get('/api/logout', ensureAuthenticated, (req, res) => {
   res.status(200).json({ message: 'Logout successful' });
 });
 
+
+router.post('/update-status',async (req, res) => {
+  const { memberId, status } = req.body;
+
+  try {
+    if (!memberId || !status) {
+      return res.status(400).json({ success: false, message: 'Missing required fields' });
+    }
+
+    const member = await memberModel.findById(memberId);
+
+    if (!member) {
+      return res.status(404).json({ success: false, message: 'Member not found' });
+    }
+
+    member.status = status;
+    await member.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Member status updated to ${status}`,
+    });
+  } catch (error) {
+    console.error('Error updating status:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error while updating status',
+    });
+  }
+});
 module.exports = router;

@@ -13,8 +13,8 @@ const MemberSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["Member", "President", "Treasurer", "Secretary"],
-    default: "Member"
+    enum: ['president', 'treasurer', 'secretary', 'member'],
+    default: 'member',
   },
   totalSavings: { type: Number, default: 0 },
   status: {

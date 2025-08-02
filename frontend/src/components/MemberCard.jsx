@@ -9,10 +9,11 @@ const MemberCard = ({ member, onRoleUpdate, onMemberDelete }) => {
   const [loadingRole, setLoadingRole] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(false);
   const [selectedRole, setSelectedRole] = useState(member?.role || 'member');
-  const [selectedStatus, setSelectedStatus] = useState(member?.status || 'pending');
+  const [selectedStatus, setSelectedStatus] = useState(member?.status || 'Pending');
   const [currentRole, setCurrentRole] = useState(member?.role || 'member');
-  const [currentStatus, setCurrentStatus] = useState(member?.status || 'pending');
- const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const [currentStatus, setCurrentStatus] = useState(member?.status || 'Pending');
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const handleRoleChange = (e) => {
     setSelectedRole(e.target.value);
   };
@@ -45,18 +46,18 @@ const MemberCard = ({ member, onRoleUpdate, onMemberDelete }) => {
 
   const handleStatusSubmit = async (e) => {
     e.preventDefault();
-    if (selectedStatus === currentStatus) return;
-    
+    if (currentStatus === 'Approved') return;
+
+    setSelectedStatus('Approved'); // approve directly
     setLoadingStatus(true);
     try {
       const response = await axios.post(`${BASE_URL}/admin/update-status`, {
         memberId: member._id,
-        status: selectedStatus,
+        status: 'Approved',
       }, { withCredentials: true });
 
       if (response.data.success) {
-        setCurrentStatus(selectedStatus);
-        // You might want to add a callback similar to onRoleUpdate
+        setCurrentStatus('Approved');
       }
     } catch (error) {
       console.error('Status update failed:', error);
@@ -144,8 +145,6 @@ const MemberCard = ({ member, onRoleUpdate, onMemberDelete }) => {
           </div>
         </div>
 
-       
-
         {/* Role Management */}
         <div className="mt-4">
           <form onSubmit={handleRoleSubmit} className="space-y-3">
@@ -185,6 +184,27 @@ const MemberCard = ({ member, onRoleUpdate, onMemberDelete }) => {
             </button>
           </form>
         </div>
+
+        {/* Approve Member Button */}
+        {currentStatus === 'Pending' && (
+          <button
+            onClick={handleStatusSubmit}
+            className="w-full mt-4 flex items-center justify-center gap-2 py-2 px-4 bg-green-50 text-green-700 hover:bg-green-100 rounded-md text-sm font-medium"
+            disabled={loadingStatus}
+          >
+            {loadingStatus ? (
+              <>
+                <Spinner size={18} className="animate-spin" />
+                Approving...
+              </>
+            ) : (
+              <>
+                <Check size={18} />
+                Approve Member
+              </>
+            )}
+          </button>
+        )}
 
         {/* Delete Button */}
         <button
