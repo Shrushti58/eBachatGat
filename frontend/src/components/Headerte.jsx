@@ -2,7 +2,7 @@ import { HandCoins } from "@phosphor-icons/react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-
+import React from 'react';
 const Headerte = () => {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;

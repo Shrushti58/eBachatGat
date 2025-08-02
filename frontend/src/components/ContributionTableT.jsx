@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
+import React from 'react';
 const ContributionTableT = ({ collections, setCollections, setTotalGroupSavings, setTotalFunds }) => {
 
    const BASE_URL = import.meta.env.VITE_API_BASE_URL;
