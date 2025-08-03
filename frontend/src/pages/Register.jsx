@@ -15,7 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const navigate = useNavigate();
- const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -200,7 +200,7 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-[#f8f5ee] flex items-center justify-center min-h-screen relative overflow-hidden">
+    <div className="bg-[#f8f5ee] flex items-center justify-center min-h-screen relative overflow-hidden p-4">
       {/* Background Wave */}
       <div className="absolute bottom-0 left-0 w-full z-0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -212,10 +212,10 @@ const Register = () => {
         </svg>
       </div>
 
-      <div className="z-10 bg-white p-8 rounded-2xl shadow-lg w-full max-w-md border border-[#f9a825]/30">
+      <div className="z-10 bg-white p-6 sm:p-8 rounded-2xl shadow-lg w-full max-w-md border border-[#f9a825]/30">
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-[#2c5e1a] mb-1">Member Registration</h2>
-          <p className="text-gray-600">Join our savings community</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#2c5e1a] mb-1">Member Registration</h2>
+          <p className="text-gray-600 text-sm sm:text-base">Join our savings community</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -229,7 +229,7 @@ const Register = () => {
               name: "contact", 
               placeholder: "Contact Number", 
               icon: <Phone size={20} />,
-              maxLength: 15 // Reasonable limit for phone numbers
+              maxLength: 15
             },
           ].map(({ name, placeholder, icon, type = "text", maxLength }) => (
             <div key={name} className="relative">
@@ -240,37 +240,39 @@ const Register = () => {
                 placeholder={placeholder}
                 onChange={handleChange}
                 maxLength={maxLength}
-                className="w-full pl-10 pr-4 py-3 border rounded-lg border-[#2c5e1a]/30 focus:ring-2 focus:ring-[#f9a825]/50 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2 sm:py-3 border rounded-lg border-[#2c5e1a]/30 focus:ring-2 focus:ring-[#f9a825]/50 focus:outline-none"
                 required
                 disabled={name === "email" && otpState.sent}
               />
-              <span className="absolute top-3 left-3 text-[#4c8c2a]">{icon}</span>
+              <span className="absolute top-1/2 left-3 transform -translate-y-1/2 text-[#4c8c2a]">{icon}</span>
               {name === "email" && !otpState.verified && (
-                <button
-                  type="button"
-                  onClick={otpState.sent ? resendOtp : sendOtp}
-                  disabled={loadingOtp || (otpState.sent && !otpState.resendAvailable)}
-                  className={`absolute top-1 right-2 text-sm ${
-                    otpState.sent 
-                      ? "text-[#2c5e1a] bg-[#f9a825]/30 hover:bg-[#f9a825]/50" 
-                      : "text-white bg-[#2c5e1a] hover:bg-[#1e4212]"
-                  } px-3 py-1 rounded transition-colors`}
-                >
-                  {loadingOtp ? (
-                    "Sending..."
-                  ) : otpState.sent ? (
-                    otpState.resendAvailable ? (
-                      <>
-                        <ArrowCounterClockwise size={16} className="inline mr-1" />
-                        Resend
-                      </>
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                  <button
+                    type="button"
+                    onClick={otpState.sent ? resendOtp : sendOtp}
+                    disabled={loadingOtp || (otpState.sent && !otpState.resendAvailable)}
+                    className={`text-xs sm:text-sm ${
+                      otpState.sent 
+                        ? "text-[#2c5e1a] bg-[#f9a825]/30 hover:bg-[#f9a825]/50" 
+                        : "text-white bg-[#2c5e1a] hover:bg-[#1e4212]"
+                    } px-2 sm:px-3 py-1 rounded transition-colors whitespace-nowrap`}
+                  >
+                    {loadingOtp ? (
+                      "Sending..."
+                    ) : otpState.sent ? (
+                      otpState.resendAvailable ? (
+                        <>
+                          <ArrowCounterClockwise size={14} className="inline mr-1" />
+                          Resend
+                        </>
+                      ) : (
+                        `${otpState.resendTimer}s`
+                      )
                     ) : (
-                      `Resend in ${otpState.resendTimer}s`
-                    )
-                  ) : (
-                    "Send OTP"
-                  )}
-                </button>
+                      "Send OTP"
+                    )}
+                  </button>
+                </div>
               )}
             </div>
           ))}
@@ -287,24 +289,26 @@ const Register = () => {
                 value={formData.otp}
                 onChange={handleChange}
                 maxLength="6"
-                className="w-full pl-10 pr-4 py-3 border rounded-lg border-[#2c5e1a]/30 focus:ring-2 focus:ring-[#f9a825]/50"
+                className="w-full pl-10 pr-4 py-2 sm:py-3 border rounded-lg border-[#2c5e1a]/30 focus:ring-2 focus:ring-[#f9a825]/50"
                 required
               />
-              <span className="absolute top-3 left-3 text-[#4c8c2a]">
+              <span className="absolute top-1/2 left-3 transform -translate-y-1/2 text-[#4c8c2a]">
                 <ShieldCheck size={20} />
               </span>
-              <button
-                type="button"
-                onClick={verifyOtp}
-                disabled={loadingOtp || formData.otp.length < 6}
-                className={`absolute top-1 right-2 text-sm ${
-                  formData.otp.length < 6
-                    ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                    : "bg-green-100 text-green-800 hover:bg-green-200"
-                } px-3 py-1 rounded transition-colors`}
-              >
-                {loadingOtp ? "Verifying..." : "Verify OTP"}
-              </button>
+              <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                <button
+                  type="button"
+                  onClick={verifyOtp}
+                  disabled={loadingOtp || formData.otp.length < 6}
+                  className={`text-xs sm:text-sm ${
+                    formData.otp.length < 6
+                      ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                      : "bg-green-100 text-green-800 hover:bg-green-200"
+                  } px-2 sm:px-3 py-1 rounded transition-colors`}
+                >
+                  {loadingOtp ? "Verifying..." : "Verify"}
+                </button>
+              </div>
             </div>
           )}
 
@@ -318,7 +322,7 @@ const Register = () => {
               name="image"
               accept="image/*"
               onChange={handleChange}
-              className="w-full border border-[#2c5e1a]/30 rounded-lg shadow-sm file:bg-[#f9a825]/20 file:text-[#2c5e1a] file:border-0 file:py-2 file:px-4 file:mr-4 file:rounded-lg"
+              className="w-full text-xs sm:text-sm border border-[#2c5e1a]/30 rounded-lg shadow-sm file:bg-[#f9a825]/20 file:text-[#2c5e1a] file:border-0 file:py-2 file:px-4 file:mr-4 file:rounded-lg"
             />
           </div>
 
@@ -326,23 +330,23 @@ const Register = () => {
           <button
             type="submit"
             disabled={isSubmitting || !otpState.verified}
-            className={`w-full py-3 px-4 ${
+            className={`w-full py-2 sm:py-3 px-4 ${
               isSubmitting || !otpState.verified
                 ? "bg-[#f9a825]/50 cursor-not-allowed"
                 : "bg-[#f9a825] hover:bg-[#e6951d]"
-            } text-[#2c5e1a] font-bold rounded-lg shadow transition-colors`}
+            } text-[#2c5e1a] font-bold rounded-lg shadow transition-colors text-sm sm:text-base`}
           >
             {isSubmitting ? (
               "Registering..."
             ) : (
               <>
-                <UserPlus size={20} className="inline-block mr-2" />
+                <UserPlus size={18} className="inline-block mr-2" />
                 {otpState.verified ? "Complete Registration" : "Verify Email to Continue"}
               </>
             )}
           </button>
 
-          <div className="text-center text-sm text-gray-600 mt-4">
+          <div className="text-center text-xs sm:text-sm text-gray-600 mt-4">
             Already have an account?{" "}
             <Link
               to="/member/login"
