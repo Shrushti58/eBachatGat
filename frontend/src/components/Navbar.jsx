@@ -21,19 +21,15 @@ const Navbar = ({ userType = 'member' }) => {
       });
 
       setTimeout(() => {
-  navigate('/', {
-    state: {
-      alert: {
-        message: response.data.message,
-        type: 'success',
-      },
-    },
-  });
-
-  // Force full reload to reset all event listeners and states
-  window.location.reload();
-}, 500);
-
+        navigate('/', {
+          state: {
+            alert: {
+              message: response.data.message,
+              type: 'success',
+            },
+          },
+        });
+      }, 500);
     } catch (error) {
       toast.error('Logout failed. Try again.', {
         position: "top-center",
