@@ -68,6 +68,7 @@ const MemberCard = ({ member, onRoleUpdate, onMemberDelete }) => {
 
   const handleDeleteMember = async (e) => {
     e.preventDefault();
+     e.stopPropagation(); // Add this line
     if (!window.confirm(`Are you sure you want to remove ${member.name}?`)) return;
 
     try {
@@ -208,6 +209,7 @@ const MemberCard = ({ member, onRoleUpdate, onMemberDelete }) => {
 
         {/* Delete Button */}
         <button
+        type="button"  
           onClick={handleDeleteMember}
           className="w-full mt-4 flex items-center justify-center gap-2 py-2 px-4 bg-red-50 text-red-600 hover:bg-red-100 rounded-md text-sm font-medium"
         >

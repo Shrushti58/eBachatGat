@@ -1,3 +1,5 @@
+import React from 'react';
+
 const LoanTableT = ({ allLoans, loanPenalty }) => {
   if (!allLoans || allLoans.length === 0) {
     return <p className="text-[#2c5e1a]/70 text-center py-6">No loan records available.</p>;

@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import React from 'react';
 
 const LoanRepaymentFormT = ({ activeLoans, setting, refreshData }) => {
   const [selectedLoan, setSelectedLoan] = useState(null);

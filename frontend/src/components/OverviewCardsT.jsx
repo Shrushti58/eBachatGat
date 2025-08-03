@@ -1,4 +1,5 @@
 import { Wallet, Calendar, Users } from "lucide-react";
+import React from 'react';
 
 const OverviewCardsT = ({ totalGroupSavings, totalFunds, members }) => {
   return (
