@@ -1,4 +1,4 @@
-# eBachat Gat – Turning Handwritten Records into a Smart Digital Platform
+# eBachatGat – Turning Handwritten Records into a Smart Digital Platform💡
 
 
 ![eBachat Gat Banner](assets/MainDash.png)
