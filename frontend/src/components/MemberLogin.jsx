@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from "react-router-dom";
 
 axios.defaults.withCredentials = true;
 
@@ -13,7 +11,7 @@ const MemberLogin = () => {
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
- const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,9 +25,11 @@ const MemberLogin = () => {
           position: "top-center",
           autoClose: 1000,
           onClose: () => {
-  navigate(response.data.redirectUrl);
-}
-
+            // Clear form and navigate
+            setEmail('');
+            setPassword('');
+            navigate(response.data.redirectUrl || '/member/dashboard');
+          }
         });
       }
     } catch (error) {
@@ -44,9 +44,9 @@ const MemberLogin = () => {
   };
 
   return (
-    <div className="bg-[#f8f5ee] flex items-center justify-center min-h-screen relative overflow-hidden">
+    <div className="bg-[#f8f5ee] flex items-center justify-center min-h-screen relative overflow-hidden p-4">
       {/* SVG Wave Background */}
-      <div className="absolute bottom-0 left-0 w-full">
+      <div className="absolute bottom-0 left-0 w-full z-0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
           <path 
             fill="#2c5e1a" 
@@ -57,25 +57,25 @@ const MemberLogin = () => {
       </div>
 
       {/* Login Card */}
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border border-[#f9a825]/30 relative z-10">
-        <div className="text-center mb-8">
-          <i className="ph ph-hand-coins text-[#f9a825] text-5xl mb-4"></i>
-          <h2 className="text-3xl font-bold text-[#2c5e1a]">Member Login</h2>
-          <p className="text-gray-600 mt-2">Access your savings account</p>
+      <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-[#f9a825]/30 relative z-10">
+        <div className="text-center mb-6 sm:mb-8">
+          <i className="ph ph-hand-coins text-[#f9a825] text-4xl sm:text-5xl mb-3 sm:mb-4"></i>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#2c5e1a]">Member Login</h2>
+          <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Access your savings account</p>
         </div>
         
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           <div>
             <label className="block text-sm font-medium text-[#2c5e1a] mb-1">Email</label>
             <div className="relative">
-              <i className="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-[#4c8c2a]"></i>
+              <i className="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-[#4c8c2a] text-sm sm:text-base"></i>
               <input
                 type="email"
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full pl-10 pr-3 py-3 border border-[#2c5e1a]/30 rounded-lg shadow-sm focus:ring-2 focus:ring-[#f9a825]/50 focus:border-[#f9a825] transition-all duration-300"
+                className="w-full pl-10 pr-3 py-2 sm:py-3 border border-[#2c5e1a]/30 rounded-lg shadow-sm focus:ring-2 focus:ring-[#f9a825]/50 focus:border-[#f9a825] transition-all duration-300 text-sm sm:text-base"
                 placeholder="your@email.com"
               />
             </div>
@@ -84,24 +84,26 @@ const MemberLogin = () => {
           <div>
             <label className="block text-sm font-medium text-[#2c5e1a] mb-1">Password</label>
             <div className="relative">
-              <i className="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-[#4c8c2a]"></i>
+              <i className="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-[#4c8c2a] text-sm sm:text-base"></i>
               <input
                 type="password"
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full pl-10 pr-3 py-3 border border-[#2c5e1a]/30 rounded-lg shadow-sm focus:ring-2 focus:ring-[#f9a825]/50 focus:border-[#f9a825] transition-all duration-300"
+                className="w-full pl-10 pr-3 py-2 sm:py-3 border border-[#2c5e1a]/30 rounded-lg shadow-sm focus:ring-2 focus:ring-[#f9a825]/50 focus:border-[#f9a825] transition-all duration-300 text-sm sm:text-base"
                 placeholder="••••••••"
               />
             </div>
           </div>
           
-          <div className="pt-2">
+          <div className="pt-1 sm:pt-2">
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full py-3 px-4 bg-[#f9a825] hover:bg-[#e6951d] text-[#2c5e1a] font-bold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+              className={`w-full py-2 sm:py-3 px-4 bg-[#f9a825] hover:bg-[#e6951d] text-[#2c5e1a] font-bold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 text-sm sm:text-base ${
+                isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
             >
               {isSubmitting ? (
                 <>
@@ -117,7 +119,7 @@ const MemberLogin = () => {
             </button>
           </div>
           
-          <div className="text-center text-sm text-gray-600 mt-6">
+          <div className="text-center text-xs sm:text-sm text-gray-600 mt-4 sm:mt-6">
             <p>Not registered yet?{' '}
               <Link 
                 to="/member/register" 
@@ -126,7 +128,6 @@ const MemberLogin = () => {
                 Create an account
               </Link>
             </p>
-           
           </div>
         </form>
       </div>

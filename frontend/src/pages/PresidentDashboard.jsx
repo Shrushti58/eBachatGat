@@ -16,17 +16,39 @@ const PresidentDashboard = () => {
   const [processingLoan, setProcessingLoan] = useState(null);
   const navigate = useNavigate();
    const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const handleLogout = async () => {
-    try {
-      await axios.get(`${BASE_URL}/president/api/logout`, {
-        withCredentials: true,
+const handleLogout = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}/president/api/logout`, {
+      withCredentials: true,
+    });
+
+    toast.success(res.data.message || "Logged out successfully", {
+      position: "top-center",
+      autoClose: 2000,
+    });
+
+    setTimeout(() => {
+      navigate("/", {
+        state: {
+          alert: {
+            message: res.data.message || "Logged out successfully",
+            type: "success",
+          },
+        },
       });
-      navigate("/");
-    } catch (err) {
-      console.error("Logout failed:", err);
-      toast.error("Logout failed. Please try again.");
-    }
-  };
+
+      // Refresh to reset auth state and ensure clean login next time
+      window.location.reload();
+    }, 500);
+  } catch (err) {
+    console.error("Logout failed:", err);
+    toast.error("Logout failed. Please try again.", {
+      position: "top-center",
+      autoClose: 2000,
+    });
+  }
+};
+
 
   const fetchDashboard = async () => {
     try {

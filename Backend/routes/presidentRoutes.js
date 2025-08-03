@@ -328,9 +328,29 @@ router.get("/loan-details/:id", ensurePresident, async (req, res) => {
   }
 });
 
-router.get('/api/logout', ensurePresident, (req, res) => {
-  res.clearCookie('token');
-  return res.status(200).json({ success: true, message: 'President logout successful.' });
+router.get('/api/logout', (req, res) => {
+  try {
+    // Clear the token cookie with same options used in login
+    res.clearCookie("token", {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+});
+
+    // Successful logout response
+    return res.status(200).json({ 
+      success: true, 
+      message: 'Logout successful.',
+      redirectUrl: '/member/login'
+    });
+
+  } catch (error) {
+    console.error('Logout error:', error);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'An error occurred during logout' 
+    });
+  }
 });
 
 module.exports = router;

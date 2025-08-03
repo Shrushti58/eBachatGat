@@ -7,15 +7,38 @@ const Headerse = () => {
   const navigate = useNavigate();
    const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const handleLogout = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/secretary/api/logout`);
-      toast.success(res.data.message || "Logged out successfully");
-      navigate("/");
-    } catch (err) {
-      const msg = err.response?.data?.error || "Logout failed";
-      toast.error(msg);
-    }
-  };
+  try {
+    const res = await axios.get(`${BASE_URL}/secretary/api/logout`, {
+      withCredentials: true,
+    });
+
+    toast.success(res.data.message || "Logged out successfully", {
+      position: "top-center",
+      autoClose: 2000,
+    });
+
+    setTimeout(() => {
+      navigate("/", {
+        state: {
+          alert: {
+            message: res.data.message || "Logged out successfully",
+            type: "success",
+          },
+        },
+      });
+
+      // Force full reload to fix login not working after logout
+      window.location.reload();
+    }, 500);
+  } catch (err) {
+    const msg = err.response?.data?.error || "Logout failed";
+    toast.error(msg, {
+      position: "top-center",
+      autoClose: 2000,
+    });
+  }
+};
+
 
   return (
     <header className="bg-[#2c5e1a] text-white sticky top-0 shadow-md z-50">

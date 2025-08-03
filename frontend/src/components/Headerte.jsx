@@ -6,16 +6,40 @@ import React from 'react';
 const Headerte = () => {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const handleLogout = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/treasurer/logout`);
-      toast.success(res.data.message || "Logged out successfully");
-      navigate("/");
-    } catch (err) {
-      const msg = err.response?.data?.error || "Logout failed";
-      toast.error(msg);
-    }
-  };
+ const handleLogout = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}/treasurer/logout`, {
+      withCredentials: true, // Ensure cookie is properly cleared
+    });
+
+    toast.success(res.data.message || "Logged out successfully", {
+      position: "top-center",
+      autoClose: 2000,
+    });
+
+    // Delay navigation and reload for smoother UX and cookie cleanup
+    setTimeout(() => {
+      navigate("/", {
+        state: {
+          alert: {
+            message: res.data.message || "Logged out successfully",
+            type: "success",
+          },
+        },
+      });
+
+      // Reload to reinitialize session state and fix stale login behavior
+      window.location.reload();
+    }, 500);
+  } catch (err) {
+    const msg = err.response?.data?.error || "Logout failed";
+    toast.error(msg, {
+      position: "top-center",
+      autoClose: 2000,
+    });
+  }
+};
+
 
   return (
     <header className="bg-[#2c5e1a] text-white sticky top-0 shadow-md z-50">

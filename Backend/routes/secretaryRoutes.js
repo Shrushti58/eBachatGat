@@ -194,7 +194,11 @@ router.delete("/delete/:id", ensureSecretary, async (req, res) => {
 });
 
 router.get('/api/logout', ensureSecretary, (req, res) => {
-  res.clearCookie('token');
+ res.clearCookie("token", {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+});
   return res.status(200).json({ success: true, message: 'Secretary logout successful.' });
 });
 

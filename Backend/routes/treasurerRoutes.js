@@ -546,10 +546,10 @@ router.post(
 
 router.get('/logout', ensureTreasurer, (req, res) => {
   res.clearCookie("token", {
-    httpOnly: true,
-    sameSite: "Lax", // or "Strict"/"None" depending on your setup
-    secure: process.env.NODE_ENV === "production" // use secure in production
-  });
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+});
 
   return res.status(200).json({ message: "Logout successful" });
 });
