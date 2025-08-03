@@ -90,7 +90,7 @@ router.post("/approve-member/:memberId", ensurePresident, async (req, res) => {
     const { memberId } = req.params;
 
     const member = await Member.findById(memberId);
-    if (!member || member.role !== "Member" || member.status !== "Pending") {
+    if (!member || member.role !== "member" || member.status !== "Pending") {
       return res.status(404).json({ success: false, message: "Pending member not found" });
     }
 
@@ -109,7 +109,7 @@ router.post("/reject-member/:memberId", ensurePresident, async (req, res) => {
     const { memberId } = req.params;
 
     const member = await Member.findById(memberId);
-    if (!member || member.role !== "Member" || member.status !== "Pending") {
+    if (!member || member.role !== "member" || member.status !== "Pending") {
       return res.status(404).json({ success: false, message: "Pending member not found" });
     }
 
