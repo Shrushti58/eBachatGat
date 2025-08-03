@@ -37,7 +37,6 @@ const handleLogout = async () => {
         },
       });
 
-      // Refresh to reset auth state and ensure clean login next time
       window.location.reload();
     }, 500);
   } catch (err) {
