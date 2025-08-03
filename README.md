@@ -1,6 +1,7 @@
 # eBachat Gat - Digital Savings Group Platform
 
-![eBachat Gat Banner](https://via.placeholder.com/1200x400?text=eBachat+Gat+-+Digital+Savings+Groups) <!-- Replace with actual screenshot -->
+![eBachat Gat Banner](assets/MainDash.png)
+>
 
 ## 🌟 Overview
 eBachat Gat is a full-stack platform that digitizes traditional Indian savings groups (Bachat Gats), enabling secure management of collective savings, loans, and meetings. The system modernizes these community banking systems while preserving their core social and financial principles.
