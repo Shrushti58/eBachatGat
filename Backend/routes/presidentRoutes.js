@@ -60,7 +60,7 @@ router.get("/dashboard", ensurePresident, async (req, res) => {
     const pendingLoans = await Loan.find({ status: "Pending" }).populate("memberId", "name");
 
     // ✅ New: Get all pending member registrations
-    const pendingMembers = await Member.find({ role: "Member", status: "Pending" });
+    const pendingMembers = await Member.find({ role: "member", status: "Pending" });
 
     return res.status(200).json({
       success: true,
