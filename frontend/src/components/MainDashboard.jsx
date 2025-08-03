@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -13,11 +13,15 @@ import {
   FaFileAlt,
   FaUserFriends,
   FaHandsHelping,
+  FaBars,
+  FaTimes,
 } from "react-icons/fa";
 import { RiHandCoinLine } from "react-icons/ri";
 import { Mail } from "lucide-react";
 
 const MainDashboard = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   // Animation variants
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const testimonials = [
@@ -75,6 +79,10 @@ const MainDashboard = () => {
     transition: { duration: 0.3 },
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <div className="bg-[#f8f5ee] min-h-screen overflow-x-hidden">
       {/* Header */}
@@ -89,7 +97,9 @@ const MainDashboard = () => {
             <RiHandCoinLine className="text-[#f9a825] text-3xl md:text-4xl" />
             <span className="ml-2 md:ml-3">E-BachatGat</span>
           </motion.div>
-          <nav className="flex space-x-3 md:space-x-6">
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex space-x-3 md:space-x-6">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 className="hover:text-[#f9a825] text-sm md:text-lg font-medium transition-colors duration-300"
@@ -107,7 +117,60 @@ const MainDashboard = () => {
               </Link>
             </motion.div>
           </nav>
+          
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={toggleMenu}
+              className="text-white focus:outline-none"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <FaTimes className="w-6 h-6" />
+              ) : (
+                <FaBars className="w-6 h-6" />
+              )}
+            </button>
+          </div>
         </div>
+        
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-[#2c5e1a] px-4 pb-4"
+          >
+            <div className="flex flex-col space-y-3">
+              <motion.div 
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Link
+                  className="block hover:text-[#f9a825] text-lg font-medium transition-colors duration-300 py-2"
+                  to="/member/login"
+                >
+                  Member Login
+                </Link>
+              </motion.div>
+              <motion.div 
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Link
+                  className="block hover:text-[#f9a825] text-lg font-medium transition-colors duration-300 py-2"
+                  to="/admin/login"
+                >
+                  Admin Panel
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
       </header>
 
       {/* Hero Section */}
@@ -296,6 +359,7 @@ const MainDashboard = () => {
         </div>
       </section>
 
+      {/* Testimonials */}
       <section className="py-12 md:py-16 bg-[#f8f5ee]">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div
