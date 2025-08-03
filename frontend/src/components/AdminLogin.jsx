@@ -12,8 +12,6 @@ const AdminLogin = () => {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -54,7 +52,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="bg-[#f8f5ee] flex items-center justify-center min-h-screen relative overflow-hidden">
+    <div className="bg-[#f8f5ee] flex items-center justify-center min-h-screen relative overflow-hidden px-4">
       {/* Background Wave */}
       <div className="absolute bottom-0 left-0 w-full z-0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -66,16 +64,35 @@ const AdminLogin = () => {
         </svg>
       </div>
 
+      {/* Decorative elements */}
+      <div className="absolute top-10 left-10 w-20 h-20 rounded-full bg-[#f9a825]/10 blur-xl md:block hidden"></div>
+      <div className="absolute bottom-20 right-10 w-16 h-16 rounded-full bg-[#2c5e1a]/10 blur-lg md:block hidden"></div>
+
       <ToastContainer />
 
-      <div className="z-10 bg-white p-8 rounded-2xl shadow-lg border border-[#f9a825]/30 max-w-md w-full">
-        <div className="text-center mb-8">
-          <i className="ph ph-hand-coins text-[#f9a825] text-5xl mb-4"></i>
-          <h2 className="text-3xl font-bold text-[#2c5e1a]">Admin Login</h2>
-          <p className="text-gray-600 mt-2">Access the Bachat Gat backend</p>
+      <div className="z-10 bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-[#f9a825]/30 w-full max-w-md">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-[#f9a825]/10 rounded-full mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#f9a825"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#2c5e1a]">Admin Login</h2>
+       <p className="text-gray-600 mt-2 text-sm sm:text-base">Access the eBachat Gat Admin Server</p>
+
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           <div className="relative">
             <input
               type="email"
@@ -84,9 +101,9 @@ const AdminLogin = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full pl-10 pr-4 py-3 border border-[#2c5e1a]/30 rounded-lg shadow-sm focus:ring-2 focus:ring-[#f9a825]/50 focus:border-[#f9a825] transition-all duration-300"
+              className="w-full pl-10 pr-4 py-2 sm:py-3 border border-[#2c5e1a]/30 rounded-lg shadow-sm focus:ring-2 focus:ring-[#f9a825]/50 focus:border-[#f9a825] transition-all duration-300 text-sm sm:text-base"
             />
-            <span className="absolute top-3 left-3 text-[#4c8c2a]">
+            <span className="absolute top-1/2 left-3 transform -translate-y-1/2 text-[#4c8c2a]">
               <EnvelopeSimple size={20} />
             </span>
           </div>
@@ -99,9 +116,9 @@ const AdminLogin = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full pl-10 pr-4 py-3 border border-[#2c5e1a]/30 rounded-lg shadow-sm focus:ring-2 focus:ring-[#f9a825]/50 focus:border-[#f9a825] transition-all duration-300"
+              className="w-full pl-10 pr-4 py-2 sm:py-3 border border-[#2c5e1a]/30 rounded-lg shadow-sm focus:ring-2 focus:ring-[#f9a825]/50 focus:border-[#f9a825] transition-all duration-300 text-sm sm:text-base"
             />
-            <span className="absolute top-3 left-3 text-[#4c8c2a]">
+            <span className="absolute top-1/2 left-3 transform -translate-y-1/2 text-[#4c8c2a]">
               <LockSimple size={20} />
             </span>
           </div>
@@ -109,14 +126,14 @@ const AdminLogin = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-3 px-4 bg-[#f9a825] hover:bg-[#e6951d] text-[#2c5e1a] font-bold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center ${
+            className={`w-full py-2 sm:py-3 px-4 bg-[#f9a825] hover:bg-[#e6951d] text-[#2c5e1a] font-bold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center ${
               isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
-            }`}
+            } text-sm sm:text-base`}
           >
             {isSubmitting ? (
               <>
                 <svg
-                  className="animate-spin -ml-1 mr-2 h-5 w-5 text-[#2c5e1a]"
+                  className="animate-spin -ml-1 mr-2 h-4 w-4 sm:h-5 sm:w-5 text-[#2c5e1a]"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -139,14 +156,14 @@ const AdminLogin = () => {
               </>
             ) : (
               <>
-                <SignIn size={20} className="mr-2" />
+                <SignIn size={18} className="mr-2" />
                 Login
               </>
             )}
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-600 mt-4">
+        <p className="text-center text-xs sm:text-sm text-gray-600 mt-4">
           Don&apos;t have an account?{' '}
           <Link
             to="/admin/register"

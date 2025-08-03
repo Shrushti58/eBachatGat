@@ -37,9 +37,7 @@ export default function AdminRegister() {
     } catch (err) {
       if (err.response) {
         const { status, data } = err.response;
-
         let message = data.message || "Unknown error occurred.";
-
         toast.error(message, {
           position: "top-center",
           autoClose: 3000,
@@ -58,9 +56,9 @@ export default function AdminRegister() {
   };
 
   return (
-    <div className="bg-[#f8f5ee] flex items-center justify-center min-h-screen relative overflow-hidden">
+    <div className="bg-[#f8f5ee] flex items-center justify-center min-h-screen relative overflow-hidden px-4 sm:px-6">
       {/* Background Wave */}
-      <div className="absolute bottom-0 left-0 w-full">
+      <div className="absolute bottom-0 left-0 w-full z-0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
           <path
             fill="#2c5e1a"
@@ -70,18 +68,41 @@ export default function AdminRegister() {
         </svg>
       </div>
 
+      {/* Decorative elements */}
+      <div className="absolute top-10 right-10 w-16 h-16 rounded-full bg-[#f9a825]/10 blur-xl hidden sm:block"></div>
+      <div className="absolute bottom-20 left-10 w-12 h-12 rounded-full bg-[#2c5e1a]/10 blur-lg hidden sm:block"></div>
+
       <ToastContainer />
 
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border border-[#f9a825]/30 relative z-10">
-        <div className="text-center mb-8">
-          <i className="ph ph-hand-coins text-[#f9a825] text-5xl mb-4"></i>
-          <h2 className="text-3xl font-bold text-[#2c5e1a]">
+      <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-[#f9a825]/30 relative z-10">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-[#f9a825]/10 rounded-full mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#f9a825"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#2c5e1a]">
             Admin Registration
           </h2>
-          <p className="text-gray-600 mt-2">Secure the Bachat Gat portal</p>
+          <p className="text-gray-600 mt-2 text-sm sm:text-base">
+            Secure the Bachat Gat portal
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           <div className="relative">
             <input
               type="email"
@@ -90,9 +111,9 @@ export default function AdminRegister() {
               value={form.email}
               onChange={handleChange}
               required
-              className="w-full pl-10 pr-4 py-3 border border-[#2c5e1a]/30 rounded-lg shadow-sm focus:ring-2 focus:ring-[#f9a825]/50 focus:border-[#f9a825] transition-all duration-300"
+              className="w-full pl-10 pr-4 py-2 sm:py-3 border border-[#2c5e1a]/30 rounded-lg shadow-sm focus:ring-2 focus:ring-[#f9a825]/50 focus:border-[#f9a825] transition-all duration-300 text-sm sm:text-base"
             />
-            <span className="absolute top-3 left-3 text-[#4c8c2a]">
+            <span className="absolute top-1/2 left-3 transform -translate-y-1/2 text-[#4c8c2a]">
               <EnvelopeSimple size={20} />
             </span>
           </div>
@@ -105,9 +126,9 @@ export default function AdminRegister() {
               value={form.password}
               onChange={handleChange}
               required
-              className="w-full pl-10 pr-4 py-3 border border-[#2c5e1a]/30 rounded-lg shadow-sm focus:ring-2 focus:ring-[#f9a825]/50 focus:border-[#f9a825] transition-all duration-300"
+              className="w-full pl-10 pr-4 py-2 sm:py-3 border border-[#2c5e1a]/30 rounded-lg shadow-sm focus:ring-2 focus:ring-[#f9a825]/50 focus:border-[#f9a825] transition-all duration-300 text-sm sm:text-base"
             />
-            <span className="absolute top-3 left-3 text-[#4c8c2a]">
+            <span className="absolute top-1/2 left-3 transform -translate-y-1/2 text-[#4c8c2a]">
               <LockSimple size={20} />
             </span>
           </div>
@@ -115,14 +136,14 @@ export default function AdminRegister() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-3 px-4 bg-[#f9a825] hover:bg-[#e6951d] text-[#2c5e1a] font-bold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center ${
+            className={`w-full py-2 sm:py-3 px-4 bg-[#f9a825] hover:bg-[#e6951d] text-[#2c5e1a] font-bold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center ${
               isSubmitting ? "opacity-70 cursor-not-allowed" : ""
-            }`}
+            } text-sm sm:text-base`}
           >
             {isSubmitting ? (
               <>
                 <svg
-                  className="animate-spin -ml-1 mr-2 h-5 w-5 text-[#2c5e1a]"
+                  className="animate-spin -ml-1 mr-2 h-4 w-4 sm:h-5 sm:w-5 text-[#2c5e1a]"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -145,14 +166,14 @@ export default function AdminRegister() {
               </>
             ) : (
               <>
-                <UserPlus size={20} className="mr-2" />
+                <UserPlus size={18} className="mr-2" />
                 Register
               </>
             )}
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-600 mt-4">
+        <p className="text-center text-xs sm:text-sm text-gray-600 mt-4">
           Already have an account?{" "}
           <Link
             to="/admin/login"
